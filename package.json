@@ -7,10 +7,16 @@
   "author": "open@alimilani.ir",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
   "dependencies": {
     "config": "^3.3.7",
     "express": "^4.17.2",
     "joi": "^17.6.0",
     "mongoose": "^6.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
