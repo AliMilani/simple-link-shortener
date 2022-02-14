@@ -1,0 +1,16 @@
+{
+  "name": "simple-link-shortener",
+  "version": "1.0.0",
+  "description": "a simple expressjs mongodb link shortener",
+  "main": "index.js",
+  "repository": "https://github.com/AliMilani/simple-link-shortener",
+  "author": "open@alimilani.ir",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "config": "^3.3.7",
+    "express": "^4.17.2",
+    "joi": "^17.6.0",
+    "mongoose": "^6.2.1"
+  }
+}
