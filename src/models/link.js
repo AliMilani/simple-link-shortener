@@ -80,8 +80,8 @@ const validateLink = (link) => {
             ),
         slug: Joi.string().min(3).max(100),
         advancedSettings: {
-            dateStart: Joi.date(),
-            dateEnd: Joi.date(),
+            dateStart: Joi.date().default(Date.now()),
+            dateEnd: Joi.date().greater(Joi.ref("dateStart")), //should be greater than date start
             redirectCode: Joi.number().valid(301, 302),
             password: Joi.string().max(500),
         },
