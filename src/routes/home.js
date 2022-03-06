@@ -22,24 +22,31 @@ router.get("/:slugId", async (req, res) => {
     //check if link is expired
     if (link.advancedSettings.dateEnd) {
         if (Date.now() > link.advancedSettings.dateEnd) {
-            res.status(401).send("Link is expired.");
+            return res.status(401).send("Link is expired.");
         }
     }
 
     //check if link is started
     if (link.advancedSettings.dateStart) {
         if (Date.now() < link.advancedSettings.dateStart) {
-            res.status(401).send("Link is not started yet.");
+            return res.status(401).send("Link is not started yet.");
+        }
+    }
+
+    //check if link is expired
+    if (link.advancedSettings.dateEnd) {
+        if (Date.now() > link.advancedSettings.dateEnd) {
+            return res.status(401).send("Link is expired.");
         }
     }
 
     //redirect to new domain
     let redirectCode = link.advancedSettings.redirectCode || 302;
     if (link.url.startsWith("https://") || link.url.startsWith("http://")) {
-        res.redirect(redirectCode, link.url);
+        return res.redirect(redirectCode, link.url);
     }
     else {
-        res.redirect(redirectCode, "http://" + link.url);
+        return res.redirect(redirectCode, "http://" + link.url);
     }
 
 });
