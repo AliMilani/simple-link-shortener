@@ -36,6 +36,7 @@ const linkSchema = new mongoose.Schema({
         unique: true,
         maxlength: [100, "Slug is too long"],
         minlength: [3, "Slug must be at least 3 characters"],
+        match: [/^[a-zA-Z0-9]$/, "Invalid slug please submit valid slug"],
     },
     advancedSettings: {
         dateStart: {
@@ -77,8 +78,8 @@ const validateLink = (link) => {
             .required()
             .regex(
                 /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
-            ),
-        slug: Joi.string().min(3).max(100),
+        ),
+        slug: Joi.string().min(3).max(100).regex(/^[a-zA-Z0-9]{6}$/),
         advancedSettings: {
             dateStart: Joi.date().default(Date.now()),
             dateEnd: Joi.date().greater(Joi.ref("dateStart")), //should be greater than date start
