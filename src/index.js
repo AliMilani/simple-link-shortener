@@ -1,4 +1,5 @@
 require("dotenv").config("../.env");
+const cors = require('cors')
 const express = require("express");
 const mongoose = require("mongoose");
 const config = require("config");
@@ -12,6 +13,7 @@ mongoose
     .catch((err) => console.log(err));
 
 app.use(express.json());
+app.use(cors())
 
 app.use("/", home);
 app.use("/api/links", links);
