@@ -17,8 +17,10 @@ router.post("/", async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     //check duplicate slug
-    let slugId = await Link.findOne({ slug: req.body.slug });
-    if (slugId) return res.status(400).send("Slug already exists.");
+    if (req.body.slug) {
+        let slugId = await Link.findOne({ slug: req.body.slug });
+        if (slugId) return res.status(400).send("Slug already exists.");
+    }
 
     //create new link
     let link = new Link({
