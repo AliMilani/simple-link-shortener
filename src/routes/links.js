@@ -1,9 +1,10 @@
 const { Link, validate } = require("../models/link");
-const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 const _ = require("lodash");
 const bcrypt = require("bcryptjs");
+const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 
 router.get("/", async (req, res) => {
     const links = await Link.find().select("-__v");
@@ -37,7 +38,7 @@ router.post("/", async (req, res) => {
     res.send(link);
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, admin, async (req, res) => {
     //validate
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -74,7 +75,7 @@ router.put("/:id", async (req, res) => {
     res.send(link);
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, admin, async (req, res) => {
     let link = await Link.findByIdAndRemove(req.params.id);
     if (!link) return res.status(404).send("Link not found.");
     res.send(link);
