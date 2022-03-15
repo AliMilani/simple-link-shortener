@@ -1,4 +1,5 @@
 require("dotenv").config("../.env");
+require('express-async-errors');
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
