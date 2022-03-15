@@ -1,5 +1,5 @@
 require("dotenv").config("../.env");
-require('express-async-errors');
+require("express-async-errors");
 const winston = require("winston");
 require("winston-mongodb");
 const errors = require("./middleware/error");
@@ -13,11 +13,23 @@ const links = require("./routes/links");
 const users = require("./routes/users");
 const auth = require("./routes/auth");
 
-winston.add(new winston.transports.File({ filename: 'logfile.log' }));
-winston.add(new winston.transports.MongoDB({ db: config.get("mongoURI") }));
+const mongoURI = config.get("mongoURI");
+
+winston.createLogger({
+    exceptionHandlers: [
+        new winston.transports.File({ filename: "exceptions.log" }),
+        new winston.transports.MongoDB({
+            db: mongoURI,
+            collection: "log_exceptions",
+        }),
+    ],
+});
+
+winston.add(new winston.transports.File({ filename: "logfile.log" }));
+winston.add(new winston.transports.MongoDB({ db: mongoURI }));
 
 mongoose
-    .connect(config.get("mongoURI"))
+    .connect(mongoURI)
     .then(() => console.log("MongoDB Connected"))
     .catch((err) => console.log(err));
 
