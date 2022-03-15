@@ -1,4 +1,5 @@
 require("dotenv").config("../.env");
+const errors = require("./middleware/error");
 require('express-async-errors');
 const cors = require("cors");
 const express = require("express");
@@ -20,14 +21,18 @@ mongoose
 if (!config.get("jwtPrivateKey")) {
     throw new Error("FATAL ERROR: jwtPrivateKey is not defined.");
 }
-
+// middlewares
 app.use(express.json());
 app.use(cors());
 
+// routes
 app.use("/", home);
 app.use("/api/links", links);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
+
+// handle errors
+app.use(errors);
 
 let PORT = process.env.PORT || config.get("port") || 3000;
 app.listen(PORT, () => console.log(`server started on port ${PORT}`));
