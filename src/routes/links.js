@@ -1,3 +1,4 @@
+const validateObjectId = require('../middleware/validateObjectId');
 const { Link, validate } = require("../models/link");
 const express = require("express");
 const router = express.Router();
@@ -38,7 +39,7 @@ router.post("/", async (req, res) => {
     res.send(link);
 });
 
-router.put("/:id", auth, admin, async (req, res) => {
+router.put("/:id", auth, admin, validateObjectId, async (req, res) => {
     //validate
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -75,7 +76,7 @@ router.put("/:id", auth, admin, async (req, res) => {
     res.send(link);
 });
 
-router.delete("/:id", auth, admin, async (req, res) => {
+router.delete("/:id", auth, admin, validateObjectId, async (req, res) => {
     let link = await Link.findByIdAndRemove(req.params.id);
     if (!link) return res.status(404).send("Link not found.");
     res.send(link);
