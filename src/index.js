@@ -1,6 +1,8 @@
 require("dotenv").config("../.env");
-const errors = require("./middleware/error");
 require('express-async-errors');
+const winston = require("winston");
+require("winston-mongodb");
+const errors = require("./middleware/error");
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -10,6 +12,9 @@ const home = require("./routes/home");
 const links = require("./routes/links");
 const users = require("./routes/users");
 const auth = require("./routes/auth");
+
+winston.add(new winston.transports.File({ filename: 'logfile.log' }));
+winston.add(new winston.transports.MongoDB({ db: config.get("mongoURI") }));
 
 mongoose
     .connect(config.get("mongoURI"))
