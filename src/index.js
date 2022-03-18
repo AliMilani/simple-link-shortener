@@ -1,4 +1,5 @@
 require("dotenv").config("../.env");
+// process.env.NODE_CONFIG_DIR = __dirname.split('src')[0] + 'src\\config'
 const express = require("express");
 const config = require("config");
 const winston = require("winston");

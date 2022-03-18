@@ -1,0 +1,7 @@
+{
+    "jwtPrivateKey": "unsecureKey",
+    "port": "3900",
+    "mongoURI": "mongodb://localhost:27017/simple-shortener",
+    "requiresAuth": false
+  }
+  
